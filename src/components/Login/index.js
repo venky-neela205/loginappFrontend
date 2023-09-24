@@ -26,7 +26,7 @@ class Login extends Component {
     const { username, password } = this.state
     const userDetails = { username, password }
     console.log(username, password)
-    const apiUrl = 'http://localhost:3001/login'
+    const apiUrl = 'https://loginappbackend-c3x5.onrender.com/login'
     const options = {
       method: 'POST',
       headers: {

@@ -28,7 +28,7 @@ class Register extends Component {
         const {username, password} = this.state
         const userDetails = {username, password}
         console.log(username, password)
-        const apiUrl = 'http://localhost:3001/register'
+        const apiUrl = 'https://loginappbackend-c3x5.onrender.com/register'
         const options = {
             method : "POST",
             headers : {
