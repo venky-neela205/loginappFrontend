@@ -10,6 +10,8 @@ class Register extends Component {
         password : "",
         showSubmitErr : false,
         errorMsg : '',
+        showSuccessMsg : false,
+        successMsg : '',
     }
 
     onHandleUsername = (e) => {
@@ -25,22 +27,27 @@ class Register extends Component {
 
         const {username, password} = this.state
         const userDetails = {username, password}
-        const apiUrl = 'https://loginappbackend-9zp5.onrender.com/register'
+        console.log(username, password)
+        const apiUrl = 'http://localhost:3001/register'
         const options = {
             method : "POST",
+            headers : {
+                'Content-Type' : 'application/json'
+            },
             body : JSON.stringify(userDetails)
         }
         const response = await fetch(apiUrl, options)
         const data = await response.json()
         if(response.ok){
             console.log(data)
+            this.setState({successMsg: data.message, showSuccessMsg:true})
         }else{
             this.setState({errorMsg: data.error, showSubmitErr:true})
         }
     }
 
     render(){
-        const {username, password, showSubmitErr, errorMsg} = this.state
+        const {username, password, showSubmitErr, errorMsg, showSuccessMsg, successMsg} = this.state
 
         return(
             <div className='bg-container'>
@@ -50,7 +57,8 @@ class Register extends Component {
                 <input id='username' type='text' className='input' placeholder='username' onChange={this.onHandleUsername} value={username} required />
                 <label className='label' htmlFor='password'>PASSWORD</label>
                 <input id='password' type='text' className='input' placeholder='password' onChange={this.onHandlePassword} value={password} required/>
-                {showSubmitErr && <p>*{errorMsg}</p>}
+                {showSubmitErr && <p className='err'>*{errorMsg}</p>}
+                {showSuccessMsg && <p className='success-msg'>{successMsg}</p>}
                 <button className='btn' type='submit' >Register</button>
                 <Link className='link' to="/">
                 <button className='btn' type='button' >Login Now</button>
